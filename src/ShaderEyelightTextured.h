@@ -20,11 +20,12 @@ public:
 		, texture(fileName)
 	{}
 	virtual ~CShaderEyelightTextured(void) = default;
-  
+
 	virtual Vec3f Shade(const Ray& ray) const override
 	{
 		// --- PUT YOUR CODE HERE ---
-		return Vec3f(0, 0, 0); 
+		Vec2f uvPos = ray.hit->getUV(ray);
+		return texture.GetTexel(uvPos[0], uvPos[1]).mul(CShaderEyelight::Shade(ray));
 	}
 
 private:

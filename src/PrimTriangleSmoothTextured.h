@@ -15,13 +15,13 @@ public:
 		, m_tc(tc)
 	{}
 	virtual ~CPrimTriangleSmoothTextured(void) = default;
-  
+
 	virtual Vec2f getUV(const Ray& ray) const override
 	{
 		// assume u/v coordinates in ray correspond to beta(u) and gamma(v) barycentric coordinates of 
 		// hitpoint on triangle (have to be stored like this in the intersection code !)
 		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
+		return m_tc * ray.u + m_tb * ray.v + m_ta * (1 - ray.u - ray.v);
 	}
 
 
@@ -29,5 +29,4 @@ private:
 	Vec2f m_ta;	///< vertex a texture coordiante
 	Vec2f m_tb;	///< vertex b texture coordiante
 	Vec2f m_tc;	///< vertex c texture coordiante 
-};	
-
+};

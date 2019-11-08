@@ -25,8 +25,9 @@ Mat RenderFrame(void)
 	CScene scene;
 
 	// Load scene description 
-	scene.ParseOBJ("../data/cone32.obj");
-//	scene.ParseOBJ("../data/barney.obj");
+	//scene.ParseOBJ("../data/cylinder16.obj");
+	//scene.ParseOBJ("../data/cone32.obj");
+	scene.ParseOBJ("../data/barney.obj");
 //	scene.ParseOBJ("../data/ground.obj");
 
 #ifdef ENABLE_BSP
@@ -70,6 +71,14 @@ Mat RenderFrame(void)
 	for (int y = 0; y < img.rows; y++) {
 		for (int x = 0; x < img.cols; x++) {
 			// --- PUT YOUR CODE HERE ---
+			sampleGenerator.get()->getSamples(nSamples, u, v, weight);
+			int i; 
+			while (i < nSamples)
+			{
+				scene.m_pCamera->InitRay(x + u[i], y + v[i], ray); 
+				img.at<Vec3f>(y + v[i], x + u[i]) = scene.RayTrace(ray);
+				i++; 
+			}
 		}
 	}
 #else
